@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Input Data Peternakan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="Catatan.css" />
+  </head>
+
+  <body>
+    <div class="card">
+      <h2>Catatan Peternakan</h2>
+
+      <label>Pilih Jenis Data</label>
+      <select title="Pilih Jenis Data" id="sheet" onchange="ubahForm()">
+        <option value="">-- Pilih --</option>
+        <option value="Beli sapi">Catat Pembelian Sapi</option>
+        <option value="Jual sapi">Catat Penjualan Sapi</option>
+        <option value="Biaya Tetap">Catat Gaji Orang Kandang</option>
+        <option value="Biaya variabel">Catat Biaya Pakan & SB</option>
+      </select>
+
+      <!-- Beli Sapi -->
+      <div id="formBeli" class="hidden">
+        <label>Posisi</label>
+        <input id="posisi" placeholder="A1-A20/B1-B20" />
+
+        <label>Harga Beli</label>
+        <input id="hargaBeli" type="number" placeholder="Contoh: 15.000.000" />
+      </div>
+
+      <!-- Biaya Tetap -->
+      <div id="formTetap" class="hidden">
+        <label>Nama</label>
+        <input id="namaTetap" placeholder="Nama" />
+
+        <label>Jumlah</label>
+        <input id="jumlahTetap" type="number" placeholder="Contoh: 2.000.000" />
+      </div>
+
+      <!-- Biaya Variabel -->
+      <div id="formVariabel" class="hidden">
+        <label>Nama Barang</label>
+        <input id="barang" placeholder="Nama Barang" />
+
+        <label>Jumlah</label>
+        <input id="jumlahVar" type="number" placeholder="Jumlah" />
+
+        <label>Harga</label>
+        <input id="hargaVar" type="number" placeholder="Harga" />
+      </div>
+
+      <!-- jual Sapi -->
+      <div id="formJual" class="hidden">
+        <label>Posisi</label>
+        <input id="posisiJual" placeholder="A1-A20/B1-B20" />
+
+        <label>Harga jual</label>
+        <input id="hargaJual" type="number" placeholder="Contoh: 20.000.000" />
+      </div>
+
+      <button onclick="kirim()">Simpan Data</button>
+
+      <div class="footer">Versi 1</div>
+    </div>
+
+    <script src="Catatan.js"></script>
+  </body>
+</html>
