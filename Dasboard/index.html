@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dashboard Keuangan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="dasbostell.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>📊 Dashboard Keuangan</h1>
+
+      <!-- MENU -->
+      <div class="menu">
+        <button onclick="show('penjualan')">Penjualan</button>
+        <button onclick="show('pembelian')">Pembelian</button>
+        <button onclick="show('variabel')">Biaya Variabel</button>
+        <button onclick="show('tetap')">Biaya Tetap</button>
+        <button onclick="show('peroleh')">Data</button>
+        <a href="/index.html" target="blank">
+          <button>Back</button>
+        </a>
+      </div>
+
+      <!-- TABEL -->
+      <section id="penjualan" class="card active">
+        <h2>Data Penjualan</h2>
+        <input class="search" placeholder="Cari data..." onkeyup="cari(this)" />
+        <table></table>
+      </section>
+
+      <section id="pembelian" class="card">
+        <h2>Data Pembelian</h2>
+        <input class="search" placeholder="Cari data..." onkeyup="cari(this)" />
+        <table></table>
+      </section>
+
+      <section id="variabel" class="card">
+        <h2>Biaya Variabel</h2>
+        <input class="search" placeholder="Cari data..." onkeyup="cari(this)" />
+        <table></table>
+      </section>
+
+      <section id="tetap" class="card">
+        <h2>Biaya Tetap</h2>
+        <input class="search" placeholder="Cari data..." onkeyup="cari(this)" />
+        <table></table>
+      </section>
+
+      <section id="peroleh" class="card">
+        <h2>Data</h2>
+        <input class="search" placeholder="Cari data..." onkeyup="cari(this)" />
+        <table></table>
+      </section>
+    </div>
+
+    <script src="dasbrain.js"></script>
+  </body>
+</html>
