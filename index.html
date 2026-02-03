@@ -23,7 +23,48 @@
       <!-- Beli Sapi -->
       <div id="formBeli" class="hidden">
         <label>Posisi</label>
-        <input id="posisi" placeholder="A1-A20/B1-B20" />
+        <select title="posisi" id="posisi">
+          <option value="1A">1A</option>
+          <option value="2A">2A</option>
+          <option value="3A">3A</option>
+          <option value="4A">4A</option>
+          <option value="5A">5A</option>
+          <option value="6A">6A</option>
+          <option value="7A">7A</option>
+          <option value="8A">8A</option>
+          <option value="9A">9A</option>
+          <option value="10A">10A</option>
+          <option value="11A">11A</option>
+          <option value="12A">12A</option>
+          <option value="13A">13A</option>
+          <option value="14A">14A</option>
+          <option value="15A">15A</option>
+          <option value="16A">16A</option>
+          <option value="17A">17A</option>
+          <option value="18A">18A</option>
+          <option value="19A">19A</option>
+          <option value="20A">20A</option>
+          <option value="1B">1B</option>
+          <option vaue="2B">2B</option>
+          <option value="3B">3B</option>
+          <option value="4B">4B</option>
+          <option value="5B">5B</option>
+          <option value="6B">6B</option>
+          <option value="7B">7B</option>
+          <option value="8B">8B</option>
+          <option value="9B">9B</option>
+          <option value="10B">10B</option>
+          <option value="11B">11B</option>
+          <option value="12B">12B</option>
+          <option value="13B">13B</option>
+          <option value="14B">14B</option>
+          <option value="15B">15B</option>
+          <option value="16B">16B</option>
+          <option value="17B">17B</option>
+          <option value="18B">18B</option>
+          <option value="19B">19B</option>
+          <option value="20B">20B</option>
+        </select>
 
         <label>Harga Beli</label>
         <input id="hargaBeli" type="number" placeholder="Contoh: 15.000.000" />
@@ -32,10 +73,18 @@
       <!-- Biaya Tetap -->
       <div id="formTetap" class="hidden">
         <label>Nama</label>
-        <input id="namaTetap" placeholder="Nama" />
+        <select title="Nama" id="namaTetap">
+          <option value="Angga">Angga</option>
+          <option value="Dedi">Dedi</option>
+        </select>
 
-        <label>Jumlah</label>
-        <input id="jumlahTetap" type="number" placeholder="Contoh: 2.000.000" />
+        <label>Gaji pokok</label>
+        <select title="Gaji pokok" id="JumlahTetap">
+          <option value="2000000">2.000.000</option>
+        </select>
+
+        <label>Harga Beras</label>
+        <input id="Beras" type="number" placeholder="Contoh: 450.000" />
       </div>
 
       <!-- Biaya Variabel -->
@@ -53,15 +102,57 @@
       <!-- jual Sapi -->
       <div id="formJual" class="hidden">
         <label>Posisi</label>
-        <input id="posisiJual" placeholder="A1-A20/B1-B20" />
+        <select title="posisiJual" id="posisiJual">
+          <option value="1A">1A</option>
+          <option value="2A">2A</option>
+          <option value="3A">3A</option>
+          <option value="4A">4A</option>
+          <option value="5A">5A</option>
+          <option value="6A">6A</option>
+          <option value="7A">7A</option>
+          <option value="8A">8A</option>
+          <option value="9A">9A</option>
+          <option value="10A">10A</option>
+          <option value="11A">11A</option>
+          <option value="12A">12A</option>
+          <option value="13A">13A</option>
+          <option value="14A">14A</option>
+          <option value="15A">15A</option>
+          <option value="16A">16A</option>
+          <option value="17A">17A</option>
+          <option value="18A">18A</option>
+          <option value="19A">19A</option>
+          <option value="20A">20A</option>
+          <option value="1B">1B</option>
+          <option vaue="2B">2B</option>
+          <option value="3B">3B</option>
+          <option value="4B">4B</option>
+          <option value="5B">5B</option>
+          <option value="6B">6B</option>
+          <option value="7B">7B</option>
+          <option value="8B">8B</option>
+          <option value="9B">9B</option>
+          <option value="10B">10B</option>
+          <option value="11B">11B</option>
+          <option value="12B">12B</option>
+          <option value="13B">13B</option>
+          <option value="14B">14B</option>
+          <option value="15B">15B</option>
+          <option value="16B">16B</option>
+          <option value="17B">17B</option>
+          <option value="18B">18B</option>
+          <option value="19B">19B</option>
+          <option value="20B">20B</option>
+        </select>
 
         <label>Harga jual</label>
         <input id="hargaJual" type="number" placeholder="Contoh: 20.000.000" />
       </div>
 
       <button onclick="kirim()">Simpan Data</button>
+      <button onclick="Dasboard">Dasboard</button>
 
-      <div class="footer">Versi 1</div>
+      <div class="footer">Versi 1.1</div>
     </div>
 
     <script src="brainn.js"></script>

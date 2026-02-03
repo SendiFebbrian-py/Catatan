@@ -27,7 +27,8 @@ function kirim() {
 
   if (sheet.value === "Biaya Tetap") {
     data.nama = namaTetap.value;
-    data.jumlah = jumlahTetap.value;
+    data.jumlah = Number(JumlahTetap.value);
+    data.beras = Number(Beras.value);
   }
 
   if (sheet.value === "Biaya variabel") {
