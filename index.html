@@ -18,7 +18,15 @@
         <option value="Jual sapi">Catat Penjualan Sapi</option>
         <option value="Biaya Tetap">Catat Gaji Orang Kandang</option>
         <option value="Biaya variabel">Catat Biaya Pakan & SB</option>
+        <option value="hapus">Hapus</option>
       </select>
+
+      <!-- hapus  -->
+      <div id="formHapus" class="hidden">
+        <label>Hapus</label>
+        <input type="text" id="hapusInput" placeholder="1A" />
+        <button onclick="hapusDenganAI()">Hapus</button>
+      </div>
 
       <!-- Beli Sapi -->
       <div id="formBeli" class="hidden">
@@ -67,7 +75,20 @@
         </select>
 
         <label>Harga Beli</label>
-        <input id="hargaBeli" type="number" placeholder="Contoh: 15.000.000" />
+        <input
+          id="hargaBeli"
+          type="text"
+          placeholder="Contoh: 15.000.000"
+          oninput="formatRupiah(this)"
+        />
+
+        <label>Tanggal</label>
+        <input
+          id="tanggalbeli"
+          type="date"
+          placeholder="dd/mm/yyyy"
+          class="auto-tanggal"
+        />
         <button onclick="kirim()">Simpan Data</button>
       </div>
 
@@ -86,6 +107,14 @@
 
         <label>Harga Beras</label>
         <input id="Beras" type="number" placeholder="Contoh: 450.000" />
+
+        <label>Tanggal</label>
+        <input
+          id="tanggaltetap"
+          type="date"
+          placeholder="dd/mm/yyyy"
+          class="auto-tanggal"
+        />
         <button onclick="kirim()">Simpan Data</button>
       </div>
 
@@ -99,6 +128,14 @@
 
         <label>Harga</label>
         <input id="hargaVar" type="number" placeholder="Harga" />
+
+        <label>Tanggal</label>
+        <input
+          id="tanggalvar"
+          type="date"
+          placeholder="dd/mm/yyyy"
+          class="auto-tanggal"
+        />
         <button onclick="kirim()">Simpan Data</button>
       </div>
 
@@ -149,7 +186,20 @@
         </select>
 
         <label>Harga jual</label>
-        <input id="hargaJual" type="number" placeholder="Contoh: 20.000.000" />
+        <input
+          id="hargaJual"
+          type="text"
+          placeholder="Contoh: 20.000.000"
+          oninput="formatRupiah(this)"
+        />
+
+        <label>Tanggal</label>
+        <input
+          id="tanggaljual"
+          type="date"
+          placeholder="dd/mm/yyyy"
+          class="auto-tanggal"
+        />
         <button onclick="kirim()">Simpan Data</button>
       </div>
 
