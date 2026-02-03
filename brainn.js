@@ -64,20 +64,25 @@ function formatRupiah(input) {
   input.value = angka.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
 
-function hapusDenganAI() {
+function hapusData() {
   const keyword = document.getElementById("hapusInput").value.trim();
   if (!keyword) {
-    alert("Isi dulu");
+    alert("Isi nama dulu");
     return;
   }
 
   fetch(URL, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({ keyword }),
   })
     .then((res) => res.json())
-    .then((res) => alert(res.message))
+    .then((res) => {
+      alert(res.message);
+      document.getElementById("hapusInput").value = "";
+    })
     .catch((err) => {
       console.error(err);
       alert("Gagal terhubung ke server");
