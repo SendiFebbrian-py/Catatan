@@ -17,53 +17,15 @@
         <option value="Beli sapi">Catat Pembelian Sapi</option>
         <option value="Jual sapi">Catat Penjualan Sapi</option>
         <option value="Biaya Tetap">Catat Gaji Orang Kandang</option>
-        <option value="Biaya variabel">Catat Biaya Pakan & SB</option>
+        <option value="Biaya variabel">Catat Biaya Pakan & dsb</option>
       </select>
 
-      <!-- Beli Sapi -->
+      <!-- ================= BELI SAPI ================= -->
       <div id="formBeli" class="hidden">
-        <label>Posisi</label>
-        <select title="posisi" id="posisi">
-          <option value="1A">1A</option>
-          <option value="2A">2A</option>
-          <option value="3A">3A</option>
-          <option value="4A">4A</option>
-          <option value="5A">5A</option>
-          <option value="6A">6A</option>
-          <option value="7A">7A</option>
-          <option value="8A">8A</option>
-          <option value="9A">9A</option>
-          <option value="10A">10A</option>
-          <option value="11A">11A</option>
-          <option value="12A">12A</option>
-          <option value="13A">13A</option>
-          <option value="14A">14A</option>
-          <option value="15A">15A</option>
-          <option value="16A">16A</option>
-          <option value="17A">17A</option>
-          <option value="18A">18A</option>
-          <option value="19A">19A</option>
-          <option value="20A">20A</option>
-          <option value="1B">1B</option>
-          <option vaue="2B">2B</option>
-          <option value="3B">3B</option>
-          <option value="4B">4B</option>
-          <option value="5B">5B</option>
-          <option value="6B">6B</option>
-          <option value="7B">7B</option>
-          <option value="8B">8B</option>
-          <option value="9B">9B</option>
-          <option value="10B">10B</option>
-          <option value="11B">11B</option>
-          <option value="12B">12B</option>
-          <option value="13B">13B</option>
-          <option value="14B">14B</option>
-          <option value="15B">15B</option>
-          <option value="16B">16B</option>
-          <option value="17B">17B</option>
-          <option value="18B">18B</option>
-          <option value="19B">19B</option>
-          <option value="20B">20B</option>
+        <label>Blok</label>
+        <select title="Pilih Blok Beli" id="posisi">
+          <option value="">-- Pilih Blok --</option>
+          <!-- DIISI OTOMATIS DARI SHEET "Beli sapi" -->
         </select>
 
         <label>Harga Beli</label>
@@ -76,108 +38,74 @@
 
         <label>Tanggal</label>
         <input
+          placeholder="dd/mm/yyyy"
           id="tanggalbeli"
           type="date"
-          placeholder="dd/mm/yyyy"
           class="auto-tanggal"
         />
+
         <button onclick="kirim()">Simpan Data</button>
       </div>
 
-      <!-- Biaya Tetap -->
+      <!-- ================= BIAYA TETAP ================= -->
       <div id="formTetap" class="hidden">
         <label>Nama</label>
-        <select title="Nama" id="namaTetap">
+        <select title="Pilih Anggota" id="namaTetap">
+          <option value="">-- Pilih Anggota --</option>
           <option value="Angga">Angga</option>
           <option value="Dedi">Dedi</option>
         </select>
 
-        <label>Gaji pokok</label>
-        <select title="Gaji pokok" id="JumlahTetap">
+        <label>Gaji Pokok</label>
+        <select title="Gaji" id="JumlahTetap">
           <option value="2000000">2.000.000</option>
         </select>
 
         <label>Harga Beras</label>
-        <input id="Beras" type="number" placeholder="Contoh: 450.000" />
+        <input placeholder="450.000" id="Beras" type="number" />
 
         <label>Tanggal</label>
         <input
+          placeholder="dd/mm/yyyy"
           id="tanggaltetap"
           type="date"
-          placeholder="dd/mm/yyyy"
           class="auto-tanggal"
         />
+
         <button onclick="kirim()">Simpan Data</button>
       </div>
 
-      <!-- Biaya Variabel -->
+      <!-- ================= BIAYA VARIABEL ================= -->
       <div id="formVariabel" class="hidden">
         <label>Nama Barang</label>
-        <input id="barang" placeholder="Nama Barang" />
+        <input placeholder="Masukan Nama Barang" id="barang" />
 
         <label>Jumlah</label>
-        <input id="jumlahVar" type="number" placeholder="Jumlah" />
+        <input placeholder="Masukan jumlah" id="jumlahVar" type="number" />
 
         <label>Harga</label>
-        <input id="hargaVar" type="number" placeholder="Harga" />
+        <input placeholder="Masukan Harga" id="hargaVar" type="number" />
 
         <label>Tanggal</label>
         <input
+          placeholder="dd/mm/yyyy"
           id="tanggalvar"
           type="date"
-          placeholder="dd/mm/yyyy"
           class="auto-tanggal"
         />
+
         <button onclick="kirim()">Simpan Data</button>
       </div>
 
-      <!-- jual Sapi -->
+      <!-- ================= JUAL SAPI ================= -->
       <div id="formJual" class="hidden">
-        <label>Posisi</label>
-        <select title="posisiJual" id="posisiJual">
-          <option value="1A">1A</option>
-          <option value="2A">2A</option>
-          <option value="3A">3A</option>
-          <option value="4A">4A</option>
-          <option value="5A">5A</option>
-          <option value="6A">6A</option>
-          <option value="7A">7A</option>
-          <option value="8A">8A</option>
-          <option value="9A">9A</option>
-          <option value="10A">10A</option>
-          <option value="11A">11A</option>
-          <option value="12A">12A</option>
-          <option value="13A">13A</option>
-          <option value="14A">14A</option>
-          <option value="15A">15A</option>
-          <option value="16A">16A</option>
-          <option value="17A">17A</option>
-          <option value="18A">18A</option>
-          <option value="19A">19A</option>
-          <option value="20A">20A</option>
-          <option value="1B">1B</option>
-          <option vaue="2B">2B</option>
-          <option value="3B">3B</option>
-          <option value="4B">4B</option>
-          <option value="5B">5B</option>
-          <option value="6B">6B</option>
-          <option value="7B">7B</option>
-          <option value="8B">8B</option>
-          <option value="9B">9B</option>
-          <option value="10B">10B</option>
-          <option value="11B">11B</option>
-          <option value="12B">12B</option>
-          <option value="13B">13B</option>
-          <option value="14B">14B</option>
-          <option value="15B">15B</option>
-          <option value="16B">16B</option>
-          <option value="17B">17B</option>
-          <option value="18B">18B</option>
-          <option value="19B">19B</option>
-          <option value="20B">20B</option>
+        <label>Blok</label>
+        <select title="Pilih Blok Jual" id="posisiJual">
+          <option value="">-- Pilih Blok --</option>
+          <!-- DIISI OTOMATIS DARI SHEET "Jual sapi" -->
         </select>
 
-        <label>Harga jual</label>
+        <label>Harga Jual</label>
         <input
           id="hargaJual"
           type="text"
@@ -187,19 +115,20 @@
 
         <label>Tanggal</label>
         <input
+          placeholder="dd/mm/yyyy"
           id="tanggaljual"
           type="date"
-          placeholder="dd/mm/yyyy"
           class="auto-tanggal"
         />
+
         <button onclick="kirim()">Simpan Data</button>
       </div>
 
-      <a href="Dasboard/index.html" target="blank">
-        <button>Dasboard</button>
+      <a href="Dasboard/index.html" target="_blank">
+        <button>Dashboard</button>
       </a>
 
-      <div class="footer">Versi 1.2</div>
+      <div class="footer">Versi 1.3</div>
     </div>
 
     <script src="brainn.js"></script>

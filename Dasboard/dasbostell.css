@@ -1,23 +1,47 @@
+/* ================================
+   RESET DASAR
+   ================================ */
+* {
+  box-sizing: border-box;
+}
+
+/* ================================
+   BODY
+   ================================ */
 body {
   font-family: Arial, sans-serif;
   background: #f4f6fb;
+  margin: 0;
+  padding: 16px;
 }
 
+/* ================================
+   CONTAINER
+   ================================ */
 .container {
   max-width: 1100px;
-  margin: 40px auto;
+  margin: 0 auto;
 }
 
+/* ================================
+   JUDUL
+   ================================ */
 h1 {
   text-align: center;
   margin-bottom: 20px;
+  font-size: 24px;
 }
 
+/* ================================
+   MENU
+   ================================ */
 .menu {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 10px;
   margin-bottom: 20px;
+  flex-wrap: wrap;
 }
 
 .menu button {
@@ -27,27 +51,58 @@ h1 {
   background: #1f2937;
   color: #fff;
   cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.1s ease;
 }
 
 .menu button:hover {
   background: #374151;
 }
 
+.menu button.active {
+  background: #2563eb;
+}
+
+.menu button:active {
+  transform: scale(0.97);
+}
+
+/* ================================
+   CARD
+   ================================ */
 .card {
   display: none;
   background: #fff;
-  padding: 20px;
+  padding: 16px;
   border-radius: 12px;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  overflow-x: auto;
 }
 
 .card.active {
   display: block;
 }
 
+/* ================================
+   SEARCH
+   ================================ */
+.search {
+  margin-bottom: 10px;
+  padding: 10px;
+  width: 100%;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+}
+
+/* ================================
+   TABLE
+   ================================ */
 table {
   width: 100%;
   border-collapse: collapse;
+  min-width: 600px;
 }
 
 th,
@@ -55,14 +110,141 @@ td {
   border: 1px solid #d1d5db;
   padding: 10px;
   text-align: left;
+  font-size: 14px;
+  white-space: nowrap;
 }
 
 th {
   background: #e5e7eb;
+  font-weight: bold;
 }
 
-.search {
+tbody tr:hover {
+  background: #f9fafb;
+}
+
+/* ================================
+   CHECKBOX
+   ================================ */
+th:first-child,
+td:first-child {
+  text-align: center;
+  width: 40px;
+}
+
+input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* baris dicentang */
+tr:has(.row-check:checked) {
+  background: #eef2ff;
+}
+
+/* ================================
+   TOMBOL HAPUS TERPILIH
+   ================================ */
+.btn-danger {
+  margin: 10px 0;
+  background: #dc2626;
+  color: #fff;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.btn-danger:hover {
+  background: #b91c1c;
+}
+
+.hidden {
+  display: none;
+}
+
+/* ================================
+   MODE TERKUNCI (DATA)
+   ================================ */
+.card.locked {
+  background: #f9fafb;
+}
+
+.card.locked table {
+  opacity: 0.75;
+}
+
+.card.locked input[type="checkbox"],
+.card.locked .btn-danger {
+  display: none !important;
+}
+
+.card.locked::before {
+  content: "🔒 Data terkunci (read only)";
+  display: block;
   margin-bottom: 10px;
-  padding: 6px;
-  width: 100%;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/* ================================
+   RESPONSIVE TABLET
+   ================================ */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 22px;
+  }
+
+  .menu button {
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+
+  th,
+  td {
+    font-size: 13px;
+    padding: 8px;
+  }
+}
+
+/* ================================
+   RESPONSIVE HP
+   ================================ */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 20px;
+  }
+
+  .menu {
+    gap: 8px;
+  }
+
+  .menu button {
+    flex: 1;
+    font-size: 13px;
+  }
+
+  .card {
+    padding: 12px;
+  }
+
+  .search {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  .btn-danger {
+    width: 100%;
+  }
+}
+
+/* ================================
+   HEADER TABEL: HURUF BESAR, TEBAL, TENGAH
+   ================================ */
+th {
+  text-transform: uppercase; /* huruf besar */
+  font-weight: 700; /* tebal */
+  text-align: center; /* rata tengah */
 }

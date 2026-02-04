@@ -9,47 +9,87 @@
 
   <body>
     <div class="container">
-      <h1>📊 Dashboard Keuangan</h1>
+      <h1>📊 DASHBOARD KEUANGAN KANDANG</h1>
 
       <!-- MENU -->
       <div class="menu">
-        <button onclick="show('penjualan')">Penjualan</button>
-        <button onclick="show('pembelian')">Pembelian</button>
-        <button onclick="show('variabel')">Biaya Variabel</button>
-        <button onclick="show('tetap')">Biaya Tetap</button>
-        <button onclick="show('peroleh')">Data</button>
-        <a href="../index.html" target="blank">
-          <button>Back</button>
+        <button onclick="show('penjualan')">Data Penjualan</button>
+        <button onclick="show('pembelian')">Data Pembelian</button>
+        <button onclick="show('variabel')">Data Biaya Pakan & dsb</button>
+        <button onclick="show('tetap')">Data Biaya Gaji Anggota</button>
+        <button onclick="show('peroleh')">Data Acuan penjualan</button>
+        <a href="../index.html" target="_blank">
+          <button>Kembali Ke Menu awal</button>
         </a>
       </div>
 
-      <!-- TABEL -->
+      <!-- ================= PENJUALAN ================= -->
       <section id="penjualan" class="card active">
         <h2>Data Penjualan</h2>
         <input class="search" placeholder="Cari data..." onkeyup="cari(this)" />
+
+        <button
+          id="hapusPenjualan"
+          class="btn-danger hidden"
+          onclick="hapusTerpilih('penjualan')"
+        >
+          Hapus Terpilih
+        </button>
+
         <table></table>
       </section>
 
+      <!-- ================= PEMBELIAN ================= -->
       <section id="pembelian" class="card">
         <h2>Data Pembelian</h2>
         <input class="search" placeholder="Cari data..." onkeyup="cari(this)" />
+
+        <button
+          id="hapusPembelian"
+          class="btn-danger hidden"
+          onclick="hapusTerpilih('pembelian')"
+        >
+          Hapus Terpilih
+        </button>
+
         <table></table>
       </section>
 
+      <!-- ================= VARIABEL ================= -->
       <section id="variabel" class="card">
-        <h2>Biaya Variabel</h2>
+        <h2>Data Biaya Pakan & dsb</h2>
         <input class="search" placeholder="Cari data..." onkeyup="cari(this)" />
+
+        <button
+          id="hapusVariabel"
+          class="btn-danger hidden"
+          onclick="hapusTerpilih('variabel')"
+        >
+          Hapus Terpilih
+        </button>
+
         <table></table>
       </section>
 
+      <!-- ================= TETAP ================= -->
       <section id="tetap" class="card">
-        <h2>Biaya Tetap</h2>
+        <h2>Data Biaya Gaji Anggota</h2>
         <input class="search" placeholder="Cari data..." onkeyup="cari(this)" />
+
+        <button
+          id="hapusTetap"
+          class="btn-danger hidden"
+          onclick="hapusTerpilih('tetap')"
+        >
+          Hapus Terpilih
+        </button>
+
         <table></table>
       </section>
 
-      <section id="peroleh" class="card">
-        <h2>Data</h2>
+      <!-- ================= DATA (TERKUNCI) ================= -->
+      <section id="peroleh" class="card locked">
+        <h2>Data Acuan penjualan</h2>
         <input class="search" placeholder="Cari data..." onkeyup="cari(this)" />
         <table></table>
       </section>
