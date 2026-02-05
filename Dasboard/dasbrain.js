@@ -7,17 +7,38 @@ const API_URL =
 const SHEET_TERKUNCI = ["Harga di peroleh"]; // ❌ tidak boleh dihapus
 
 let dataAll = {};
+let DATA_HASH = "";
 
 /* ===============================
-   LOAD DATA
+   LOAD & AUTO SYNC DATA
    =============================== */
-fetch(API_URL)
-  .then((res) => res.json())
-  .then((data) => {
-    dataAll = data;
-    renderAll();
-  });
+function hashData(data) {
+  return JSON.stringify(data).length;
+}
 
+function loadData() {
+  fetch(API_URL)
+    .then((res) => res.json())
+    .then((data) => {
+      const newHash = hashData(data);
+      if (newHash !== DATA_HASH) {
+        DATA_HASH = newHash;
+        dataAll = data;
+        renderAll();
+        console.log("🔄 Dashboard update");
+      }
+    })
+    .catch(() => {});
+}
+
+// load pertama
+loadData();
+// auto refresh tiap 10 detik
+setInterval(loadData, 10000);
+
+/* ===============================
+   RENDER SEMUA TABLE
+   =============================== */
 function renderAll() {
   renderTable("penjualan", dataAll.penjualan);
   renderTable("pembelian", dataAll.pembelian);
@@ -27,7 +48,7 @@ function renderAll() {
 }
 
 /* ===============================
-   RENDER TABLE (TANPA AKSI KANAN)
+   RENDER TABLE
    =============================== */
 function renderTable(id, data) {
   const table = document.querySelector(`#${id} table`);
@@ -42,12 +63,11 @@ function renderTable(id, data) {
 
   let html = "<thead><tr>";
 
-  // checkbox hanya jika tidak terkunci
   if (!terkunci) {
     html += `<th><input type="checkbox" id="checkAll-${id}"></th>`;
   }
 
-  html += headers.map((h) => `<th>${h}</th>`).join("");
+  html += headers.map((h) => `<th>${h.toUpperCase()}</th>`).join("");
   html += "</tr></thead><tbody>";
 
   data.forEach((row, index) => {
@@ -92,7 +112,7 @@ function renderTable(id, data) {
 }
 
 /* ===============================
-   CHECKBOX + TOMBOL HAPUS TERPILIH
+   CHECKBOX
    =============================== */
 function pasangCheckboxEvent(id) {
   const checkAll = document.getElementById(`checkAll-${id}`);
@@ -115,13 +135,13 @@ function pasangCheckboxEvent(id) {
 }
 
 /* ===============================
-   HAPUS TERPILIH (SATU-SATUNYA)
+   HAPUS TERPILIH (TANPA RELOAD)
    =============================== */
 function hapusTerpilih(id) {
   const sheet = mapSheet(id);
 
   if (SHEET_TERKUNCI.includes(sheet)) {
-    alert("Data ini terkunci dan tidak bisa dihapus");
+    alert("Data ini terkunci");
     return;
   }
 
@@ -131,11 +151,7 @@ function hapusTerpilih(id) {
     .map((c) => Number(c.dataset.row))
     .sort((a, b) => b - a);
 
-  if (!rows.length) {
-    alert("Pilih data yang mau dihapus dulu");
-    return;
-  }
-
+  if (!rows.length) return alert("Pilih data dulu");
   if (!confirm(`Yakin hapus ${rows.length} data?`)) return;
 
   fetch(API_URL, {
@@ -146,12 +162,12 @@ function hapusTerpilih(id) {
       rows,
     }),
   }).then(() => {
-    location.reload();
+    loadData(); // 🔥 update tanpa reload
   });
 }
 
 /* ===============================
-   UI & UTIL
+   UI
    =============================== */
 function show(id) {
   document
@@ -170,6 +186,9 @@ function cari(input) {
   });
 }
 
+/* ===============================
+   UTIL
+   =============================== */
 function formatRupiah(num) {
   return "Rp " + Number(num).toLocaleString("id-ID");
 }

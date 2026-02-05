@@ -13,6 +13,9 @@ body {
   background: #f4f6fb;
   margin: 0;
   padding: 16px;
+
+  /* 🔥 aman untuk zoom & pinch */
+  overflow-x: hidden;
 }
 
 /* ================================
@@ -29,7 +32,7 @@ body {
 h1 {
   text-align: center;
   margin-bottom: 20px;
-  font-size: 24px;
+  font-size: clamp(20px, 4vw, 26px);
 }
 
 /* ================================
@@ -51,6 +54,7 @@ h1 {
   background: #1f2937;
   color: #fff;
   cursor: pointer;
+  font-size: clamp(12px, 2.5vw, 14px);
   transition:
     background 0.2s ease,
     transform 0.1s ease;
@@ -73,10 +77,12 @@ h1 {
    ================================ */
 .card {
   display: none;
-  background: #fff;
+  background: #ffffff;
   padding: 16px;
   border-radius: 12px;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+
+  /* 🔥 kunci utama: tabel bisa digeser & zoom aman */
   overflow-x: auto;
 }
 
@@ -93,7 +99,7 @@ h1 {
   width: 100%;
   border-radius: 6px;
   border: 1px solid #d1d5db;
-  font-size: 14px;
+  font-size: clamp(13px, 2.5vw, 14px);
 }
 
 /* ================================
@@ -102,25 +108,31 @@ h1 {
 table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 600px;
+
+  /* 🔥 penting agar tabel tidak memaksa layar */
+  min-width: max-content;
 }
 
 th,
 td {
   border: 1px solid #d1d5db;
   padding: 10px;
-  text-align: left;
-  font-size: 14px;
+  font-size: clamp(13px, 2.5vw, 14px);
   white-space: nowrap;
-}
-
-th {
-  background: #e5e7eb;
-  font-weight: bold;
 }
 
 tbody tr:hover {
   background: #f9fafb;
+}
+
+/* ================================
+   HEADER TABEL
+   ================================ */
+th {
+  background: #e5e7eb;
+  text-transform: uppercase;
+  font-weight: 700;
+  text-align: center;
 }
 
 /* ================================
@@ -144,17 +156,17 @@ tr:has(.row-check:checked) {
 }
 
 /* ================================
-   TOMBOL HAPUS TERPILIH
+   TOMBOL HAPUS
    ================================ */
 .btn-danger {
   margin: 10px 0;
   background: #dc2626;
-  color: #fff;
+  color: #ffffff;
   border: none;
   padding: 10px 14px;
   border-radius: 8px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: clamp(13px, 2.5vw, 14px);
 }
 
 .btn-danger:hover {
@@ -166,7 +178,7 @@ tr:has(.row-check:checked) {
 }
 
 /* ================================
-   MODE TERKUNCI (DATA)
+   MODE TERKUNCI
    ================================ */
 .card.locked {
   background: #f9fafb;
@@ -190,61 +202,14 @@ tr:has(.row-check:checked) {
 }
 
 /* ================================
-   RESPONSIVE TABLET
-   ================================ */
-@media (max-width: 768px) {
-  h1 {
-    font-size: 22px;
-  }
-
-  .menu button {
-    padding: 10px 14px;
-    font-size: 13px;
-  }
-
-  th,
-  td {
-    font-size: 13px;
-    padding: 8px;
-  }
-}
-
-/* ================================
    RESPONSIVE HP
    ================================ */
 @media (max-width: 480px) {
-  h1 {
-    font-size: 20px;
-  }
-
-  .menu {
-    gap: 8px;
-  }
-
-  .menu button {
-    flex: 1;
-    font-size: 13px;
-  }
-
   .card {
     padding: 12px;
-  }
-
-  .search {
-    font-size: 13px;
-    padding: 8px;
   }
 
   .btn-danger {
     width: 100%;
   }
-}
-
-/* ================================
-   HEADER TABEL: HURUF BESAR, TEBAL, TENGAH
-   ================================ */
-th {
-  text-transform: uppercase; /* huruf besar */
-  font-weight: 700; /* tebal */
-  text-align: center; /* rata tengah */
 }
