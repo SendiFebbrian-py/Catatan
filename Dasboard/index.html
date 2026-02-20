@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dashboard Keuangan kandang</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="dasbostell.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>📊 DASHBOARD KEUANGAN KANDANG</h1>
+
+      <!-- MENU -->
+      <div class="menu">
+        <button onclick="show('penjualan')">Data Penjualan</button>
+        <button onclick="show('pembelian')">Data Pembelian</button>
+        <button onclick="show('variabel')">Data Biaya Pakan & dsb</button>
+        <button onclick="show('tetap')">Data Biaya Gaji Anggota</button>
+        <button onclick="show('peroleh')">Data Acuan penjualan</button>
+        <a href="../index.html">
+          <button>Kembali Ke Menu awal</button>
+        </a>
+      </div>
+
+      <!-- ================= PENJUALAN ================= -->
+      <section id="penjualan" class="card active">
+        <h2>Data Penjualan</h2>
+        <input class="search" placeholder="Cari data..." onkeyup="cari(this)" />
+
+        <button
+          id="hapusPenjualan"
+          class="btn-danger hidden"
+          onclick="hapusTerpilih('penjualan')"
+        >
+          Hapus Terpilih
+        </button>
+
+        <table></table>
+      </section>
+
+      <!-- ================= PEMBELIAN ================= -->
+      <section id="pembelian" class="card">
+        <h2>Data Pembelian</h2>
+        <input class="search" placeholder="Cari data..." onkeyup="cari(this)" />
+
+        <button
+          id="hapusPembelian"
+          class="btn-danger hidden"
+          onclick="hapusTerpilih('pembelian')"
+        >
+          Hapus Terpilih
+        </button>
+
+        <table></table>
+      </section>
+
+      <!-- ================= VARIABEL ================= -->
+      <section id="variabel" class="card">
+        <h2>Data Biaya Pakan & dsb</h2>
+        <input class="search" placeholder="Cari data..." onkeyup="cari(this)" />
+
+        <button
+          id="hapusVariabel"
+          class="btn-danger hidden"
+          onclick="hapusTerpilih('variabel')"
+        >
+          Hapus Terpilih
+        </button>
+
+        <table></table>
+      </section>
+
+      <!-- ================= TETAP ================= -->
+      <section id="tetap" class="card">
+        <h2>Data Biaya Gaji Anggota</h2>
+        <input class="search" placeholder="Cari data..." onkeyup="cari(this)" />
+
+        <button
+          id="hapusTetap"
+          class="btn-danger hidden"
+          onclick="hapusTerpilih('tetap')"
+        >
+          Hapus Terpilih
+        </button>
+
+        <table></table>
+      </section>
+
+      <!-- ================= DATA (TERKUNCI) ================= -->
+      <section id="peroleh" class="card locked">
+        <h2>Data Acuan penjualan</h2>
+        <input class="search" placeholder="Cari data..." onkeyup="cari(this)" />
+        <table></table>
+      </section>
+    </div>
+
+    <script src="dasbrain.js"></script>
+  </body>
+</html>

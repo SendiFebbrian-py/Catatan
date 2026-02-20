@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Catatan Kandang</title>
+
+    <!-- VIEWPORT -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- ICON -->
+    <link rel="icon" href="icons/favicon.ico" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="icons/icon-192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="512x512"
+      href="icons/icon-512.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="icons/apple-touch-icon.png"
+    />
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#1e3c72" />
+
+    <!-- STYLE -->
+    <link rel="stylesheet" href="stayleee.css" />
+  </head>
+
+  <body>
+    <!-- ================= LOADING SCREEN ================= -->
+    <div id="loading-screen">
+      <div class="loading-box">
+        <div class="loading-text">Sabar ya...</div>
+        <div class="loading-bar">
+          <div class="loading-progress"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= APP ================= -->
+    <div class="card app-hidden" id="app">
+      <h2>Catatan Peternakan</h2>
+
+      <!-- PILIH JENIS -->
+      <label for="sheet">Pilih Jenis Data</label>
+      <select id="sheet" onchange="ubahForm()">
+        <option value="">-- Pilih --</option>
+        <option value="Beli sapi">Catat Pembelian Sapi</option>
+        <option value="Jual sapi">Catat Penjualan Sapi</option>
+        <option value="Biaya Tetap">Catat Gaji Orang Kandang</option>
+        <option value="Biaya variabel">Catat Biaya Pakan & dsb</option>
+      </select>
+
+      <!-- ===== BELI SAPI ===== -->
+      <div id="formBeli" class="hidden">
+        <label for="posisi">Blok</label>
+        <select id="posisi">
+          <option value="">-- Pilih Blok --</option>
+        </select>
+
+        <label for="hargaBeli">Harga Beli</label>
+        <input
+          id="hargaBeli"
+          type="text"
+          class="uang"
+          placeholder="15.000.000"
+        />
+
+        <label for="tanggalbeli">Tanggal</label>
+        <input id="tanggalbeli" type="date" class="auto-tanggal" />
+
+        <button type="button" onclick="kirim()">Simpan Data</button>
+      </div>
+
+      <!-- ===== BIAYA TETAP ===== -->
+      <div id="formTetap" class="hidden">
+        <label for="namaTetap">Nama</label>
+        <select id="namaTetap">
+          <option value="">-- Pilih Anggota --</option>
+          <option value="Angga">Angga</option>
+          <option value="Dedi">Dedi</option>
+        </select>
+
+        <label for="JumlahTetap">Gaji Pokok</label>
+        <select id="JumlahTetap">
+          <option value="2000000">2.000.000</option>
+        </select>
+
+        <label for="Beras">Harga Beras</label>
+        <input id="Beras" type="text" class="uang" placeholder="450.000" />
+
+        <label for="tanggaltetap">Tanggal</label>
+        <input id="tanggaltetap" type="date" class="auto-tanggal" />
+
+        <button type="button" onclick="kirim()">Simpan Data</button>
+      </div>
+
+      <!-- ===== BIAYA VARIABEL ===== -->
+      <div id="formVariabel" class="hidden">
+        <label for="barang">Nama Barang</label>
+        <input id="barang" placeholder="Nama barang" />
+
+        <label for="jumlahVar">Jumlah</label>
+        <input id="jumlahVar" type="text" class="uang" placeholder="2.000" />
+
+        <label for="hargaVar">Harga</label>
+        <input
+          id="hargaVar"
+          type="text"
+          class="uang"
+          placeholder="20.000.000"
+        />
+
+        <label for="tanggalvar">Tanggal</label>
+        <input id="tanggalvar" type="date" class="auto-tanggal" />
+
+        <button type="button" onclick="kirim()">Simpan Data</button>
+      </div>
+
+      <!-- ===== JUAL SAPI ===== -->
+      <div id="formJual" class="hidden">
+        <label for="posisiJual">Blok</label>
+        <select id="posisiJual">
+          <option value="">-- Pilih Blok --</option>
+        </select>
+
+        <label for="hargaJual">Harga Jual</label>
+        <input
+          id="hargaJual"
+          type="text"
+          class="uang"
+          placeholder="20.000.000"
+        />
+
+        <label for="tanggaljual">Tanggal</label>
+        <input id="tanggaljual" type="date" class="auto-tanggal" />
+
+        <button type="button" onclick="kirim()">Simpan Data</button>
+      </div>
+
+      <!-- DASHBOARD -->
+      <a href="Dasboard/index.html">
+        <button type="button">Dashboard</button>
+      </a>
+
+      <div class="footer">Versi 1.3.1</div>
+    </div>
+
+    <!-- SCRIPT -->
+    <script src="brainn.js"></script>
+  </body>
+</html>
