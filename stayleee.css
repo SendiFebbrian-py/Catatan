@@ -14,7 +14,7 @@ html {
 }
 
 /* ================================
-   BODY (lebih smooth)
+   BODY
    ================================ */
 body {
   font-family:
@@ -39,27 +39,28 @@ body {
 }
 
 /* ================================
-   CARD (UPGRADE)
+   CARD
    ================================ */
 .card {
   background: rgba(255, 255, 255, 0.96);
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(10px);
 
   padding: 1.6rem;
   width: 100%;
   max-width: 26rem;
 
   border-radius: 1.2rem;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.2),
+    0 20px 50px rgba(0, 0, 0, 0.25);
 
   animation: fadeIn 0.4s ease;
 }
 
-/* animasi halus */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
@@ -72,15 +73,27 @@ body {
    ================================ */
 h2 {
   text-align: center;
-  margin-bottom: 1.3rem;
+  margin-bottom: 1.4rem;
 
-  font-size: 1.4rem;
+  font-size: 1.45rem;
   font-weight: 700;
   color: #1e293b;
 }
 
 /* ================================
-   INPUT & SELECT (lebih clean)
+   LABEL
+   ================================ */
+label {
+  display: block;
+  margin-top: 1rem;
+
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #374151;
+}
+
+/* ================================
+   INPUT & SELECT
    ================================ */
 input,
 select {
@@ -105,7 +118,7 @@ select:focus {
 }
 
 /* ================================
-   BUTTON (UPGRADE BESAR)
+   BUTTON (PRIMARY)
    ================================ */
 button {
   margin-top: 1.2rem;
@@ -136,15 +149,24 @@ button:active {
 }
 
 /* ================================
-   LABEL
+   LOGOUT BUTTON (BEDA WARNA)
    ================================ */
-label {
-  display: block;
-  margin-top: 1rem;
+button[onclick="logout()"] {
+  background: linear-gradient(135deg, #dc2626, #7f1d1d);
+}
 
-  font-weight: 600;
+button[onclick="logout()"]:hover {
+  box-shadow: 0 10px 20px rgba(220, 38, 38, 0.4);
+}
+
+/* ================================
+   ERROR TEXT
+   ================================ */
+.error-text {
+  color: #dc2626;
+  margin-bottom: 10px;
   font-size: 0.9rem;
-  color: #374151;
+  text-align: center;
 }
 
 /* ================================
@@ -159,14 +181,14 @@ label {
 }
 
 /* ================================
-   LOGIN SCREEN SPECIAL
+   LOGIN KHUSUS
    ================================ */
 #login-screen input {
   margin-top: 0.8rem;
 }
 
 #login-screen button {
-  margin-top: 1.2rem;
+  margin-top: 1.3rem;
 }
 
 /* ================================
@@ -199,7 +221,7 @@ label {
 }
 
 /* ================================
-   LOADING SCREEN (UPGRADE)
+   LOADING SCREEN
    ================================ */
 #loading-screen {
   position: fixed;
