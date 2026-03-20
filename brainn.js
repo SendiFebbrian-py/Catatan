@@ -1,6 +1,8 @@
 const URL =
   "https://script.google.com/macros/s/AKfycbxL5FNQn80V2FPXqbtX3sLfkCX7Piy_Ozpfv7FH4AKfQvXoRJjS1gBdVxV9WCBbRsSEyA/exec";
 
+const TOKEN = "Sendi_Banjar";
+
 /* ================================
    MASTER DATA BLOK
    ================================ */
@@ -76,7 +78,7 @@ function resetTimer() {
 }
 
 /* ================================
-   LOGIN (FIX SYNC APPS SCRIPT)
+   LOGIN
    ================================ */
 function login() {
   const user = document.getElementById("username").value;
@@ -86,23 +88,22 @@ function login() {
   fetch(URL, {
     method: "POST",
     headers: {
-      "Content-Type": "text/plain;charset=utf-8", // 🔥 penting
+      "Content-Type": "text/plain;charset=utf-8",
     },
     body: JSON.stringify({
       action: "login",
       username: user,
       password: pass,
+      token: TOKEN,
     }),
   })
-    .then((res) => res.text()) // 🔥 ambil raw dulu
+    .then((res) => res.text())
     .then((text) => {
-      console.log("LOGIN RESP:", text); // debug
-
       let res;
       try {
         res = JSON.parse(text);
       } catch {
-        alert("Server tidak mengirim JSON");
+        alert("Server error");
         return;
       }
 
@@ -117,10 +118,7 @@ function login() {
         if (error) error.style.display = "block";
       }
     })
-    .catch((err) => {
-      console.error(err);
-      alert("Gagal koneksi ke server");
-    });
+    .catch(() => alert("Gagal koneksi"));
 }
 
 function logout() {
@@ -140,11 +138,8 @@ function setProgress(val) {
 }
 
 function openApp() {
-  const loading = document.getElementById("loading-screen");
-  const app = document.getElementById("app");
-
-  if (loading) loading.style.display = "none";
-  if (app) app.style.display = "block";
+  document.getElementById("loading-screen").style.display = "none";
+  document.getElementById("app").style.display = "block";
 }
 
 /* ================================
@@ -161,11 +156,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   startSessionTimer();
-
-  if (!navigator.onLine) {
-    alert("Aplikasi harus ONLINE");
-    return;
-  }
 
   const today = new Date().toISOString().split("T")[0];
   document.querySelectorAll(".auto-tanggal").forEach((el) => {
@@ -207,10 +197,16 @@ function ubahForm() {
 }
 
 /* ================================
-   LOAD BLOK
+   LOAD BLOK (FIX TOKEN)
    ================================ */
 function loadBlok(sheetName, selectId) {
-  fetch(URL + "?action=posisi&sheet=" + encodeURIComponent(sheetName))
+  fetch(
+    URL +
+      "?action=posisi&sheet=" +
+      encodeURIComponent(sheetName) +
+      "&token=" +
+      TOKEN,
+  )
     .then((r) => r.json())
     .then((terpakai) => {
       const select = document.getElementById(selectId);
@@ -230,14 +226,9 @@ function loadBlok(sheetName, selectId) {
 }
 
 /* ================================
-   KIRIM DATA
+   KIRIM DATA (FIX TOKEN)
    ================================ */
 function kirim() {
-  if (!navigator.onLine) {
-    alert("Aplikasi harus ONLINE");
-    return;
-  }
-
   if (!sheet.value) {
     alert("Pilih jenis data dulu");
     return;
@@ -276,9 +267,12 @@ function kirim() {
   fetch(URL, {
     method: "POST",
     headers: {
-      "Content-Type": "text/plain;charset=utf-8", // 🔥 samakan juga
+      "Content-Type": "text/plain;charset=utf-8",
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify({
+      ...data,
+      token: TOKEN,
+    }),
   })
     .then(() => {
       alert("Data berhasil disimpan");
