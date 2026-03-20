@@ -53,7 +53,7 @@ const SEMUA_BLOK = [
 const bersih = (v) => (v ? v.toString().replace(/\D/g, "") : "");
 
 /* ================================
-   SESSION TIMER (AUTO LOGOUT)
+   SESSION TIMER
    ================================ */
 let timeout;
 
@@ -76,7 +76,7 @@ function resetTimer() {
 }
 
 /* ================================
-   LOGIN (BACKEND)
+   LOGIN (FIX SYNC APPS SCRIPT)
    ================================ */
 function login() {
   const user = document.getElementById("username").value;
@@ -86,7 +86,7 @@ function login() {
   fetch(URL, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "text/plain;charset=utf-8", // 🔥 penting
     },
     body: JSON.stringify({
       action: "login",
@@ -94,8 +94,18 @@ function login() {
       password: pass,
     }),
   })
-    .then((res) => res.json())
-    .then((res) => {
+    .then((res) => res.text()) // 🔥 ambil raw dulu
+    .then((text) => {
+      console.log("LOGIN RESP:", text); // debug
+
+      let res;
+      try {
+        res = JSON.parse(text);
+      } catch {
+        alert("Server tidak mengirim JSON");
+        return;
+      }
+
       if (res.status === "ok") {
         sessionStorage.setItem("login", "true");
 
@@ -104,10 +114,13 @@ function login() {
 
         startSessionTimer();
       } else {
-        error.style.display = "block";
+        if (error) error.style.display = "block";
       }
     })
-    .catch(() => alert("Gagal login"));
+    .catch((err) => {
+      console.error(err);
+      alert("Gagal koneksi ke server");
+    });
 }
 
 function logout() {
@@ -263,7 +276,7 @@ function kirim() {
   fetch(URL, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "text/plain;charset=utf-8", // 🔥 samakan juga
     },
     body: JSON.stringify(data),
   })

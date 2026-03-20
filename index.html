@@ -20,11 +20,6 @@
       sizes="512x512"
       href="icons/icon-512.png"
     />
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="icons/apple-touch-icon.png"
-    />
 
     <!-- PWA -->
     <link rel="manifest" href="manifest.json" />
@@ -35,7 +30,7 @@
   </head>
 
   <body>
-    <!-- ================= LOADING SCREEN ================= -->
+    <!-- ================= LOADING ================= -->
     <div id="loading-screen">
       <div class="loading-box">
         <div class="loading-text">Sabar ya...</div>
@@ -45,7 +40,7 @@
       </div>
     </div>
 
-    <!-- ================= LOGIN SCREEN ================= -->
+    <!-- ================= LOGIN ================= -->
     <div id="login-screen" class="card" style="display: none">
       <h2>Login Admin</h2>
 
@@ -76,96 +71,77 @@
         <option value="Biaya variabel">Catat Biaya Pakan & dsb</option>
       </select>
 
-      <!-- ===== BELI SAPI ===== -->
+      <!-- ===== BELI ===== -->
       <div id="formBeli" class="hidden">
-        <label for="posisi">Blok</label>
-        <select id="posisi">
-          <option value="">-- Pilih Blok --</option>
-        </select>
+        <label>Blok</label>
+        <select id="posisi"></select>
 
-        <label for="hargaBeli">Harga Beli</label>
-        <input
-          id="hargaBeli"
-          type="text"
-          class="uang"
-          placeholder="15.000.000"
-        />
+        <label>Harga Beli</label>
+        <input id="hargaBeli" type="text" class="uang" />
 
-        <label for="tanggalbeli">Tanggal</label>
+        <label>Tanggal</label>
         <input id="tanggalbeli" type="date" class="auto-tanggal" />
 
-        <button type="button" onclick="kirim()">Simpan Data</button>
+        <button onclick="kirim()">Simpan Data</button>
       </div>
 
-      <!-- ===== BIAYA TETAP ===== -->
+      <!-- ===== TETAP ===== -->
       <div id="formTetap" class="hidden">
-        <label for="namaTetap">Nama</label>
+        <label>Nama</label>
         <select id="namaTetap">
-          <option value="">-- Pilih Anggota --</option>
+          <option value="">-- Pilih --</option>
           <option value="Angga">Angga</option>
           <option value="Dedi">Dedi</option>
         </select>
 
-        <label for="JumlahTetap">Gaji Pokok</label>
+        <label>Gaji</label>
         <select id="JumlahTetap">
           <option value="2000000">2.000.000</option>
         </select>
 
-        <label for="Beras">Harga Beras</label>
-        <input id="Beras" type="text" class="uang" placeholder="450.000" />
+        <label>Beras</label>
+        <input id="Beras" class="uang" />
 
-        <label for="tanggaltetap">Tanggal</label>
+        <label>Tanggal</label>
         <input id="tanggaltetap" type="date" class="auto-tanggal" />
 
-        <button type="button" onclick="kirim()">Simpan Data</button>
+        <button onclick="kirim()">Simpan Data</button>
       </div>
 
-      <!-- ===== BIAYA VARIABEL ===== -->
+      <!-- ===== VARIABEL ===== -->
       <div id="formVariabel" class="hidden">
-        <label for="barang">Nama Barang</label>
-        <input id="barang" placeholder="Nama barang" />
+        <label>Barang</label>
+        <input id="barang" />
 
-        <label for="jumlahVar">Jumlah</label>
-        <input id="jumlahVar" type="text" class="uang" placeholder="2.000" />
+        <label>Jumlah</label>
+        <input id="jumlahVar" class="uang" />
 
-        <label for="hargaVar">Harga</label>
-        <input
-          id="hargaVar"
-          type="text"
-          class="uang"
-          placeholder="20.000.000"
-        />
+        <label>Harga</label>
+        <input id="hargaVar" class="uang" />
 
-        <label for="tanggalvar">Tanggal</label>
+        <label>Tanggal</label>
         <input id="tanggalvar" type="date" class="auto-tanggal" />
 
-        <button type="button" onclick="kirim()">Simpan Data</button>
+        <button onclick="kirim()">Simpan Data</button>
       </div>
 
-      <!-- ===== JUAL SAPI ===== -->
+      <!-- ===== JUAL ===== -->
       <div id="formJual" class="hidden">
-        <label for="posisiJual">Blok</label>
-        <select id="posisiJual">
-          <option value="">-- Pilih Blok --</option>
-        </select>
+        <label>Blok</label>
+        <select id="posisiJual"></select>
 
-        <label for="hargaJual">Harga Jual</label>
-        <input
-          id="hargaJual"
-          type="text"
-          class="uang"
-          placeholder="20.000.000"
-        />
+        <label>Harga Jual</label>
+        <input id="hargaJual" class="uang" />
 
-        <label for="tanggaljual">Tanggal</label>
+        <label>Tanggal</label>
         <input id="tanggaljual" type="date" class="auto-tanggal" />
 
-        <button type="button" onclick="kirim()">Simpan Data</button>
+        <button onclick="kirim()">Simpan Data</button>
       </div>
 
       <!-- DASHBOARD -->
       <a href="Dasboard/index.html">
-        <button type="button">Dashboard</button>
+        <button>Dashboard</button>
       </a>
 
       <div class="footer">Versi 1.3.1</div>
@@ -173,5 +149,18 @@
 
     <!-- SCRIPT -->
     <script src="brainn.js"></script>
+
+    <!-- ================= UX IMPROVEMENT ================= -->
+    <script>
+      // enter = login
+      document.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+          const loginBox = document.getElementById("login-screen");
+          if (loginBox.style.display !== "none") {
+            login();
+          }
+        }
+      });
+    </script>
   </body>
 </html>
