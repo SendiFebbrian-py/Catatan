@@ -4,7 +4,7 @@
 const API_URL =
   "https://script.google.com/macros/s/AKfycbxL5FNQn80V2FPXqbtX3sLfkCX7Piy_Ozpfv7FH4AKfQvXoRJjS1gBdVxV9WCBbRsSEyA/exec";
 
-const TOKEN = "Sendi_Banjar"; // 🔒 wajib sama dengan Apps Script
+const TOKEN = "Sendi_Banjar";
 const SHEET_TERKUNCI = ["Harga di peroleh"];
 
 let dataAll = {};
@@ -18,28 +18,27 @@ function hashData(data) {
 }
 
 function loadData() {
-  fetch(API_URL + "?token=" + TOKEN) // 🔥 FIX
+  fetch(API_URL + "?token=" + TOKEN)
     .then((res) => res.json())
     .then((data) => {
-      console.log("DATA:", data); // debug
+      console.log("DATA:", data);
+      console.log("DATA TETAP:", data.tetap); // 🔥 debug
 
       const newHash = hashData(data);
       if (newHash !== DATA_HASH) {
         DATA_HASH = newHash;
         dataAll = data;
         renderAll();
-        console.log("🔄 Dashboard update");
       }
     })
     .catch((err) => console.error("LOAD ERROR:", err));
 }
 
-// load pertama
 loadData();
 setInterval(loadData, 10000);
 
 /* ===============================
-   RENDER SEMUA TABLE
+   RENDER SEMUA
    =============================== */
 function renderAll() {
   renderTable("penjualan", dataAll.penjualan);
@@ -47,10 +46,130 @@ function renderAll() {
   renderTable("variabel", dataAll.variabel);
   renderTable("tetap", dataAll.tetap);
   renderTable("peroleh", dataAll.peroleh);
+
+  renderStatistik();
+  renderChart();
 }
 
 /* ===============================
-   RENDER TABLE
+   HELPER AMBIL ANGKA (ANTI Rp)
+   =============================== */
+function ambilAngka(val) {
+  if (!val) return 0;
+  return Number(val.toString().replace(/[^\d]/g, "")) || 0;
+}
+
+/* ===============================
+   STATISTIK
+   =============================== */
+function renderStatistik() {
+  let totalBeli = 0;
+  let totalUntung = 0;
+
+  (dataAll.pembelian || []).forEach((d) => {
+    totalBeli += ambilAngka(d.harga ?? d["harga beli"]);
+  });
+
+  (dataAll.penjualan || []).forEach((d) => {
+    totalUntung += ambilAngka(d.keuntungan);
+  });
+
+  document.getElementById("totalBeli").textContent = formatRupiah(totalBeli);
+  document.getElementById("totalUntung").textContent =
+    formatRupiah(totalUntung);
+}
+
+/* ===============================
+   CHART
+   =============================== */
+function renderChart() {
+  const pembelian = (dataAll.pembelian || []).reduce(
+    (a, d) => a + ambilAngka(d.harga ?? d["harga beli"]),
+    0,
+  );
+
+  const variabel = (dataAll.variabel || []).reduce(
+    (a, d) => a + ambilAngka(d["harga total"]),
+    0,
+  );
+
+  const tetap = (dataAll.tetap || []).reduce((total, d) => {
+    return total + ambilAngka(d.jumlah);
+  }, 0);
+
+  const totalSemua = pembelian + variabel + tetap;
+
+  drawPie(
+    "chartBreakdown",
+    [pembelian, variabel, tetap],
+    ["#3b82f6", "#f59e0b", "#ef4444"],
+    ["Pembelian sapi", "Pakan & DLL", "Gaji"],
+  );
+
+  drawPie("chartTotal", [totalSemua], ["#10b981"], ["TOTAL"]);
+}
+
+/* ===============================
+   DRAW PIE
+   =============================== */
+function drawPie(canvasId, data, colors, labels) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+
+  const ctx = canvas.getContext("2d");
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  const total = data.reduce((a, b) => a + b, 0);
+  if (total === 0) return;
+
+  let start = 0;
+
+  data.forEach((val, i) => {
+    if (val === 0) return;
+
+    const slice = (val / total) * 2 * Math.PI;
+    const mid = start + slice / 2;
+
+    // 🎨 gambar pie
+    ctx.beginPath();
+    ctx.moveTo(110, 110);
+    ctx.arc(110, 110, 100, start, start + slice);
+    ctx.fillStyle = colors[i];
+    ctx.fill();
+
+    // 🧠 kalau cuma 1 slice (TOTAL)
+    if (data.length === 1) {
+      ctx.fillStyle = "#000000";
+      ctx.textAlign = "center";
+
+      ctx.font = "bold 12px Arial";
+      ctx.fillText(labels[i], 110, 105);
+
+      ctx.font = "11px Arial";
+      ctx.fillText(formatRupiah(val), 110, 120);
+
+      return;
+    }
+
+    // 📍 posisi text
+    const textX = 110 + Math.cos(mid) * 60;
+    const textY = 110 + Math.sin(mid) * 60;
+
+    ctx.fillStyle = "#000000";
+    ctx.font = "bold 11px Arial";
+    ctx.textAlign = "center";
+
+    // 📝 label + nominal
+    ctx.fillText(labels[i], textX, textY - 6);
+    ctx.font = "10px Arial";
+    ctx.fillText(formatRupiah(val), textX, textY + 8);
+
+    start += slice;
+  });
+}
+
+/* ===============================
+   TABLE
    =============================== */
 function renderTable(id, data) {
   const table = document.querySelector(`#${id} table`);
@@ -76,13 +195,8 @@ function renderTable(id, data) {
     html += "<tr>";
 
     if (!terkunci) {
-      html += `
-        <td>
-          <input type="checkbox"
-            class="row-check"
-            data-row="${index + 2}"
-            data-sheet="${id}">
-        </td>`;
+      html += `<td><input type="checkbox" class="row-check"
+        data-row="${index + 2}" data-sheet="${id}"></td>`;
     }
 
     html += headers
@@ -95,9 +209,11 @@ function renderTable(id, data) {
 
         if (
           typeof val === "number" &&
-          /(harga|jumlah|biaya|keuntungan)/i.test(h)
+          /(harga|total|biaya|keuntungan|jumlah)/i.test(h)
         ) {
           val = formatRupiah(val);
+        } else if (typeof val === "number") {
+          val = Number(val).toLocaleString("id-ID");
         }
 
         return `<td>${val ?? ""}</td>`;
@@ -137,7 +253,7 @@ function pasangCheckboxEvent(id) {
 }
 
 /* ===============================
-   HAPUS TERPILIH
+   HAPUS
    =============================== */
 function hapusTerpilih(id) {
   const sheet = mapSheet(id);
@@ -158,18 +274,14 @@ function hapusTerpilih(id) {
 
   fetch(API_URL, {
     method: "POST",
-    headers: {
-      "Content-Type": "text/plain;charset=utf-8", // 🔥 penting
-    },
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
     body: JSON.stringify({
       action: "hapusBanyak",
       sheet,
       rows,
-      token: TOKEN, // 🔥 WAJIB
+      token: TOKEN,
     }),
-  }).then(() => {
-    loadData();
-  });
+  }).then(() => loadData());
 }
 
 /* ===============================
@@ -179,6 +291,7 @@ function show(id) {
   document
     .querySelectorAll(".card")
     .forEach((c) => c.classList.remove("active"));
+
   document.getElementById(id)?.classList.add("active");
 }
 
@@ -200,24 +313,9 @@ function formatRupiah(num) {
 }
 
 function formatTanggal(value) {
-  const hari = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
-  const bulan = [
-    "Januari",
-    "Februari",
-    "Maret",
-    "April",
-    "Mei",
-    "Juni",
-    "Juli",
-    "Agustus",
-    "September",
-    "Oktober",
-    "November",
-    "Desember",
-  ];
   const d = new Date(value);
   if (isNaN(d)) return value;
-  return `${hari[d.getDay()]}, ${d.getDate()} ${bulan[d.getMonth()]} ${d.getFullYear()}`;
+  return d.toLocaleDateString("id-ID");
 }
 
 function capitalize(str) {

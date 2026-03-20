@@ -13,20 +13,24 @@
 
       <!-- MENU -->
       <div class="menu">
-        <button onclick="show('penjualan')">Data Penjualan</button>
-        <button onclick="show('pembelian')">Data Pembelian</button>
-        <button onclick="show('variabel')">Data Biaya Pakan & dsb</button>
-        <button onclick="show('tetap')">Data Biaya Gaji Anggota</button>
-        <button onclick="show('peroleh')">Data Acuan penjualan</button>
+        <button onclick="show('penjualan')">Penjualan</button>
+        <button onclick="show('pembelian')">Pembelian</button>
+        <button onclick="show('variabel')">Biaya Variabel</button>
+        <button onclick="show('tetap')">Gaji</button>
+        <button onclick="show('peroleh')">Acuan</button>
+        <button onclick="show('statistik')">Statistik</button>
+
         <a href="../index.html">
-          <button>Kembali Ke Menu awal</button>
+          <button>Kembali</button>
         </a>
       </div>
 
       <!-- ================= PENJUALAN ================= -->
       <section id="penjualan" class="card active">
-        <h2>Data Penjualan</h2>
-        <input class="search" placeholder="Cari data..." onkeyup="cari(this)" />
+        <div class="card-header">
+          <h2>Data Penjualan</h2>
+          <input class="search" placeholder="Cari..." onkeyup="cari(this)" />
+        </div>
 
         <button
           id="hapusPenjualan"
@@ -36,13 +40,17 @@
           Hapus Terpilih
         </button>
 
-        <table></table>
+        <div class="table-wrap">
+          <table></table>
+        </div>
       </section>
 
       <!-- ================= PEMBELIAN ================= -->
       <section id="pembelian" class="card">
-        <h2>Data Pembelian</h2>
-        <input class="search" placeholder="Cari data..." onkeyup="cari(this)" />
+        <div class="card-header">
+          <h2>Data Pembelian</h2>
+          <input class="search" placeholder="Cari..." onkeyup="cari(this)" />
+        </div>
 
         <button
           id="hapusPembelian"
@@ -52,13 +60,17 @@
           Hapus Terpilih
         </button>
 
-        <table></table>
+        <div class="table-wrap">
+          <table></table>
+        </div>
       </section>
 
       <!-- ================= VARIABEL ================= -->
       <section id="variabel" class="card">
-        <h2>Data Biaya Pakan & dsb</h2>
-        <input class="search" placeholder="Cari data..." onkeyup="cari(this)" />
+        <div class="card-header">
+          <h2>Biaya Variabel</h2>
+          <input class="search" placeholder="Cari..." onkeyup="cari(this)" />
+        </div>
 
         <button
           id="hapusVariabel"
@@ -68,13 +80,17 @@
           Hapus Terpilih
         </button>
 
-        <table></table>
+        <div class="table-wrap">
+          <table></table>
+        </div>
       </section>
 
       <!-- ================= TETAP ================= -->
       <section id="tetap" class="card">
-        <h2>Data Biaya Gaji Anggota</h2>
-        <input class="search" placeholder="Cari data..." onkeyup="cari(this)" />
+        <div class="card-header">
+          <h2>Data Gaji Anggota</h2>
+          <input class="search" placeholder="Cari..." onkeyup="cari(this)" />
+        </div>
 
         <button
           id="hapusTetap"
@@ -84,14 +100,52 @@
           Hapus Terpilih
         </button>
 
-        <table></table>
+        <div class="table-wrap">
+          <table></table>
+        </div>
       </section>
 
-      <!-- ================= DATA (TERKUNCI) ================= -->
+      <!-- ================= DATA TERKUNCI ================= -->
       <section id="peroleh" class="card locked">
-        <h2>Data Acuan penjualan</h2>
-        <input class="search" placeholder="Cari data..." onkeyup="cari(this)" />
-        <table></table>
+        <div class="card-header">
+          <h2>Data Acuan Penjualan</h2>
+          <input class="search" placeholder="Cari..." onkeyup="cari(this)" />
+        </div>
+
+        <div class="table-wrap">
+          <table></table>
+        </div>
+      </section>
+
+      <!-- ================= STATISTIK ================= -->
+      <section id="statistik" class="card">
+        <h2>Statistik</h2>
+
+        <!-- 🔥 GRID STAT -->
+        <div class="stat-grid">
+          <div class="stat-box">
+            <p>Total Pembelian sapi</p>
+            <h3 id="totalBeli">Rp 0</h3>
+          </div>
+
+          <div class="stat-box">
+            <p>Total Keuntungan jual sapi</p>
+            <h3 id="totalUntung">Rp 0</h3>
+          </div>
+        </div>
+
+        <!-- 🔵 CHART -->
+        <div class="chart-wrapper">
+          <div class="circle-wrap">
+            <canvas id="chartBreakdown" width="220" height="220"></canvas>
+            <div class="circle-text" id="detailText"></div>
+          </div>
+
+          <div class="circle-wrap">
+            <canvas id="chartTotal" width="220" height="220"></canvas>
+            <div class="circle-text" id="totalText"></div>
+          </div>
+        </div>
       </section>
     </div>
 
