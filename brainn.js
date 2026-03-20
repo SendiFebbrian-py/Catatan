@@ -181,6 +181,7 @@ function ubahForm() {
   formJual.classList.add("hidden");
   formTetap.classList.add("hidden");
   formVariabel.classList.add("hidden");
+  formSwap.classList.add("hidden"); // 🔥 tambahan
 
   if (sheet.value === "Beli sapi") {
     formBeli.classList.remove("hidden");
@@ -194,6 +195,108 @@ function ubahForm() {
 
   if (sheet.value === "Biaya Tetap") formTetap.classList.remove("hidden");
   if (sheet.value === "Biaya variabel") formVariabel.classList.remove("hidden");
+
+  // 🔥 SWAP
+  if (sheet.value === "Swap") {
+    formSwap.classList.remove("hidden");
+    loadSwap();
+  }
+}
+
+/* ================================
+   LOAD BLOK SWAP
+   ================================ */
+function loadSwap() {
+  fetch(
+    URL +
+      "?action=posisi&sheet=" +
+      encodeURIComponent("Beli sapi") +
+      "&token=" +
+      TOKEN,
+  )
+    .then((r) => r.json())
+    .then((terpakai) => {
+      const s1 = document.getElementById("swap1");
+      const s2 = document.getElementById("swap2");
+
+      if (!s1 || !s2) return;
+
+      s1.innerHTML = `<option value="">-- Pilih Blok --</option>`;
+      s2.innerHTML = `<option value="">-- Pilih Blok --</option>`;
+
+      SEMUA_BLOK.forEach((blok) => {
+        if (terpakai.includes(blok)) {
+          const opt1 = document.createElement("option");
+          opt1.value = blok;
+          opt1.textContent = blok;
+
+          const opt2 = document.createElement("option");
+          opt2.value = blok;
+          opt2.textContent = blok;
+
+          s1.appendChild(opt1);
+          s2.appendChild(opt2);
+        }
+      });
+
+      s1.onchange = filterSwap;
+      s2.onchange = filterSwap;
+    });
+}
+/* ================================
+   PROSES SWAP
+   ================================ */
+function prosesSwap() {
+  const b1 = document.getElementById("swap1").value;
+  const b2 = document.getElementById("swap2").value;
+
+  if (!b1 || !b2) {
+    alert("Pilih dua blok dulu");
+    return;
+  }
+
+  if (b1 === b2) {
+    alert("Blok tidak boleh sama");
+    return;
+  }
+
+  fetch(URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "text/plain;charset=utf-8",
+    },
+    body: JSON.stringify({
+      action: "swapBlok",
+      sheet: "Beli sapi",
+      blok1: b1,
+      blok2: b2,
+      token: TOKEN,
+    }),
+  })
+    .then(() => {
+      alert("Swap berhasil");
+      loadSwap();
+    })
+    .catch(() => alert("Swap gagal"));
+}
+
+/* ================================
+   FILTER SWAP (UX BIAR RAPI)
+   ================================ */
+function filterSwap() {
+  const swap1 = document.getElementById("swap1");
+  const swap2 = document.getElementById("swap2");
+
+  const v1 = swap1.value;
+  const v2 = swap2.value;
+
+  [...swap1.options].forEach((opt) => {
+    opt.disabled = opt.value === v2;
+  });
+
+  [...swap2.options].forEach((opt) => {
+    opt.disabled = opt.value === v1;
+  });
 }
 
 /* ================================

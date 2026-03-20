@@ -67,6 +67,7 @@
         <option value="Jual sapi">Catat Penjualan Sapi</option>
         <option value="Biaya Tetap">Catat Gaji Orang Kandang</option>
         <option value="Biaya variabel">Catat Biaya Pakan & dsb</option>
+        <option value="Swap">Swap Blok</option>
       </select>
 
       <!-- ===== BELI ===== -->
@@ -135,6 +136,17 @@
         <input id="tanggaljual" type="date" class="auto-tanggal" />
 
         <button onclick="kirim()">Simpan Data</button>
+      </div>
+
+      <!-- ===== SWAP ===== -->
+      <div id="formSwap" class="hidden">
+        <label>Blok 1</label>
+        <select id="swap1"></select>
+
+        <label>Blok 2</label>
+        <select id="swap2"></select>
+
+        <button onclick="prosesSwap()">Tukar Posisi</button>
       </div>
 
       <!-- DASHBOARD -->
