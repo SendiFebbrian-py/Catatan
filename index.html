@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <title>Catatan Kandang</title>
 
-    <!-- VIEWPORT -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- ICON -->
@@ -46,9 +45,26 @@
       </div>
     </div>
 
+    <!-- ================= LOGIN SCREEN ================= -->
+    <div id="login-screen" class="card" style="display: none">
+      <h2>Login Admin</h2>
+
+      <input id="username" placeholder="Username" />
+      <input id="password" type="password" placeholder="Password" />
+
+      <button onclick="login()">Masuk</button>
+
+      <p id="login-error" style="color: red; display: none">
+        Username atau password salah
+      </p>
+    </div>
+
     <!-- ================= APP ================= -->
     <div class="card app-hidden" id="app">
       <h2>Catatan Peternakan</h2>
+
+      <!-- LOGOUT -->
+      <button onclick="logout()">Logout</button>
 
       <!-- PILIH JENIS -->
       <label for="sheet">Pilih Jenis Data</label>

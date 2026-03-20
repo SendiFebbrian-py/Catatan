@@ -53,7 +53,70 @@ const SEMUA_BLOK = [
 const bersih = (v) => (v ? v.toString().replace(/\D/g, "") : "");
 
 /* ================================
-   LOADING PROGRESS (0–100%)
+   SESSION TIMER (AUTO LOGOUT)
+   ================================ */
+let timeout;
+
+function startSessionTimer() {
+  resetTimer();
+  document.addEventListener("mousemove", resetTimer);
+  document.addEventListener("keydown", resetTimer);
+  document.addEventListener("click", resetTimer);
+}
+
+function resetTimer() {
+  clearTimeout(timeout);
+  timeout = setTimeout(
+    () => {
+      alert("Session habis, silakan login kembali");
+      logout();
+    },
+    5 * 60 * 1000,
+  );
+}
+
+/* ================================
+   LOGIN (BACKEND)
+   ================================ */
+function login() {
+  const user = document.getElementById("username").value;
+  const pass = document.getElementById("password").value;
+  const error = document.getElementById("login-error");
+
+  fetch(URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      action: "login",
+      username: user,
+      password: pass,
+    }),
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      if (res.status === "ok") {
+        sessionStorage.setItem("login", "true");
+
+        document.getElementById("login-screen").style.display = "none";
+        document.getElementById("app").style.display = "block";
+
+        startSessionTimer();
+      } else {
+        error.style.display = "block";
+      }
+    })
+    .catch(() => alert("Gagal login"));
+}
+
+function logout() {
+  sessionStorage.removeItem("login");
+  location.reload();
+}
+
+/* ================================
+   LOADING
    ================================ */
 let progress = 0;
 
@@ -63,9 +126,6 @@ function setProgress(val) {
   bar.style.width = val + "%";
 }
 
-/* ================================
-   BUKA APP
-   ================================ */
 function openApp() {
   const loading = document.getElementById("loading-screen");
   const app = document.getElementById("app");
@@ -75,10 +135,20 @@ function openApp() {
 }
 
 /* ================================
-   INIT LOADING
+   INIT
    ================================ */
 document.addEventListener("DOMContentLoaded", () => {
-  // cek online
+  const isLogin = sessionStorage.getItem("login");
+
+  if (isLogin !== "true") {
+    document.getElementById("loading-screen").style.display = "none";
+    document.getElementById("app").style.display = "none";
+    document.getElementById("login-screen").style.display = "block";
+    return;
+  }
+
+  startSessionTimer();
+
   if (!navigator.onLine) {
     alert("Aplikasi harus ONLINE");
     return;
@@ -89,7 +159,6 @@ document.addEventListener("DOMContentLoaded", () => {
     el.value = today;
   });
 
-  // simulasi progress stabil
   const interval = setInterval(() => {
     progress += 10;
     setProgress(progress);
@@ -102,7 +171,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /* ================================
-   UBAH FORM
+   FORM
    ================================ */
 function ubahForm() {
   formBeli.classList.add("hidden");
@@ -125,11 +194,9 @@ function ubahForm() {
 }
 
 /* ================================
-   LOAD BLOK (ONLINE ONLY)
+   LOAD BLOK
    ================================ */
 function loadBlok(sheetName, selectId) {
-  if (!navigator.onLine) return;
-
   fetch(URL + "?action=posisi&sheet=" + encodeURIComponent(sheetName))
     .then((r) => r.json())
     .then((terpakai) => {
@@ -137,6 +204,7 @@ function loadBlok(sheetName, selectId) {
       if (!select) return;
 
       select.innerHTML = `<option value="">-- Pilih Blok --</option>`;
+
       SEMUA_BLOK.forEach((blok) => {
         if (!terpakai.includes(blok)) {
           const opt = document.createElement("option");
@@ -149,7 +217,7 @@ function loadBlok(sheetName, selectId) {
 }
 
 /* ================================
-   KIRIM DATA (ONLINE ONLY)
+   KIRIM DATA
    ================================ */
 function kirim() {
   if (!navigator.onLine) {
@@ -194,6 +262,9 @@ function kirim() {
 
   fetch(URL, {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify(data),
   })
     .then(() => {
@@ -204,7 +275,7 @@ function kirim() {
 }
 
 /* ================================
-   RESET FORM
+   RESET
    ================================ */
 function resetFormAktif() {
   const today = new Date().toISOString().split("T")[0];
@@ -217,7 +288,7 @@ function resetFormAktif() {
 }
 
 /* ================================
-   FORMAT RIBUAN
+   FORMAT
    ================================ */
 document.addEventListener("input", (e) => {
   if (!e.target.classList.contains("uang")) return;
@@ -232,17 +303,13 @@ if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("sw.js");
 }
 
-/* =================================
-   AUTO RELOAD SAAT KONEKSI BALIK
-   ================================= */
-
-// kalau offline → kasih tanda di console (opsional)
+/* ================================
+   ONLINE / OFFLINE
+   ================================ */
 window.addEventListener("offline", () => {
-  console.warn("Offline — menunggu koneksi kembali…");
+  console.warn("Offline...");
 });
 
-// kalau online lagi → reload otomatis
 window.addEventListener("online", () => {
-  console.log("Online kembali — reload aplikasi");
   location.reload();
 });

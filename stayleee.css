@@ -6,7 +6,7 @@
 }
 
 /* ================================
-   ROOT SCALE (KUNCI ZOOM GLOBAL)
+   ROOT
    ================================ */
 html {
   font-size: 100%;
@@ -14,7 +14,7 @@ html {
 }
 
 /* ================================
-   BODY
+   BODY (lebih smooth)
    ================================ */
 body {
   font-family:
@@ -39,16 +39,32 @@ body {
 }
 
 /* ================================
-   CARD
+   CARD (UPGRADE)
    ================================ */
 .card {
-  background: #ffffff;
-  padding: 1.4rem;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(8px);
+
+  padding: 1.6rem;
   width: 100%;
   max-width: 26rem;
 
-  border-radius: 1rem;
-  box-shadow: 0 1.2rem 2.5rem rgba(0, 0, 0, 0.18);
+  border-radius: 1.2rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+
+  animation: fadeIn 0.4s ease;
+}
+
+/* animasi halus */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ================================
@@ -56,12 +72,67 @@ body {
    ================================ */
 h2 {
   text-align: center;
-  margin-bottom: 1.2rem;
+  margin-bottom: 1.3rem;
 
-  font-size: 1.35rem;
+  font-size: 1.4rem;
   font-weight: 700;
   color: #1e293b;
-  letter-spacing: 0.03em;
+}
+
+/* ================================
+   INPUT & SELECT (lebih clean)
+   ================================ */
+input,
+select {
+  width: 100%;
+  padding: 0.8rem;
+  margin-top: 0.4rem;
+
+  border-radius: 0.7rem;
+  border: 1px solid #d1d5db;
+
+  font-size: 1rem;
+  background: #ffffff;
+
+  transition: all 0.2s ease;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* ================================
+   BUTTON (UPGRADE BESAR)
+   ================================ */
+button {
+  margin-top: 1.2rem;
+  width: 100%;
+  padding: 0.9rem;
+
+  background: linear-gradient(135deg, #2563eb, #1e3c72);
+  color: #ffffff;
+
+  border: none;
+  border-radius: 0.8rem;
+
+  font-size: 1rem;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+button:active {
+  transform: scale(0.97);
 }
 
 /* ================================
@@ -77,106 +148,6 @@ label {
 }
 
 /* ================================
-   INPUT & SELECT
-   ================================ */
-input,
-select {
-  width: 100%;
-  padding: 0.75rem;
-  margin-top: 0.4rem;
-
-  border-radius: 0.65rem;
-  border: 1px solid #cbd5e1;
-
-  font-size: 1rem;
-  background: #ffffff;
-
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-input:focus,
-select:focus {
-  outline: none;
-  border-color: #2563eb;
-  box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.18);
-}
-
-/* ================================
-   INPUT UANG (CROSS BROWSER)
-   ================================ */
-input.uang {
-  appearance: textfield; /* standar */
-  -webkit-appearance: textfield; /* Safari / Chrome lama */
-}
-
-/* hilangkan spinner number (jaga-jaga) */
-input.uang::-webkit-outer-spin-button,
-input.uang::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-/* ================================
-   SELECT
-   ================================ */
-select {
-  cursor: pointer;
-}
-
-/* ================================
-   BUTTON
-   ================================ */
-button {
-  margin-top: 1.3rem;
-  width: 100%;
-  padding: 0.85rem;
-
-  background: #1e3c72;
-  color: #ffffff;
-  border: none;
-  border-radius: 0.8rem;
-
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-
-  transition:
-    background 0.2s ease,
-    transform 0.1s ease;
-}
-
-button:hover {
-  background: #16305c;
-}
-
-button:active {
-  transform: scale(0.97);
-}
-
-/* ================================
-   STATE DISABLED
-   ================================ */
-button:disabled,
-select:disabled,
-input:disabled {
-  background: #e5e7eb;
-  color: #9ca3af;
-  cursor: not-allowed;
-}
-
-/* ================================
-   FORM SECTION
-   ================================ */
-#formBeli,
-#formJual,
-#formTetap,
-#formVariabel {
-  padding-top: 0.3rem;
-}
-
-/* ================================
    HIDDEN
    ================================ */
 .hidden {
@@ -185,6 +156,17 @@ input:disabled {
 
 .app-hidden {
   display: none;
+}
+
+/* ================================
+   LOGIN SCREEN SPECIAL
+   ================================ */
+#login-screen input {
+  margin-top: 0.8rem;
+}
+
+#login-screen button {
+  margin-top: 1.2rem;
 }
 
 /* ================================
@@ -198,11 +180,11 @@ input:disabled {
 }
 
 /* ================================
-   RESPONSIVE HP
+   RESPONSIVE
    ================================ */
 @media (max-width: 480px) {
   .card {
-    padding: 1.1rem;
+    padding: 1.2rem;
   }
 
   h2 {
@@ -216,9 +198,9 @@ input:disabled {
   }
 }
 
-/* =====================================================
-   LOADING SCREEN RETRO (SABAR YA…)
-   ===================================================== */
+/* ================================
+   LOADING SCREEN (UPGRADE)
+   ================================ */
 #loading-screen {
   position: fixed;
   inset: 0;
@@ -237,7 +219,6 @@ input:disabled {
 
 .loading-text {
   font-size: 1rem;
-  letter-spacing: 0.15em;
   margin-bottom: 0.7rem;
 }
 
