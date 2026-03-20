@@ -4,7 +4,8 @@
 const API_URL =
   "https://script.google.com/macros/s/AKfycbxL5FNQn80V2FPXqbtX3sLfkCX7Piy_Ozpfv7FH4AKfQvXoRJjS1gBdVxV9WCBbRsSEyA/exec";
 
-const SHEET_TERKUNCI = ["Harga di peroleh"]; // ❌ tidak boleh dihapus
+const TOKEN = "Sendi_Banjar"; // 🔒 wajib sama dengan Apps Script
+const SHEET_TERKUNCI = ["Harga di peroleh"];
 
 let dataAll = {};
 let DATA_HASH = "";
@@ -17,9 +18,11 @@ function hashData(data) {
 }
 
 function loadData() {
-  fetch(API_URL)
+  fetch(API_URL + "?token=" + TOKEN) // 🔥 FIX
     .then((res) => res.json())
     .then((data) => {
+      console.log("DATA:", data); // debug
+
       const newHash = hashData(data);
       if (newHash !== DATA_HASH) {
         DATA_HASH = newHash;
@@ -28,12 +31,11 @@ function loadData() {
         console.log("🔄 Dashboard update");
       }
     })
-    .catch(() => {});
+    .catch((err) => console.error("LOAD ERROR:", err));
 }
 
 // load pertama
 loadData();
-// auto refresh tiap 10 detik
 setInterval(loadData, 10000);
 
 /* ===============================
@@ -135,7 +137,7 @@ function pasangCheckboxEvent(id) {
 }
 
 /* ===============================
-   HAPUS TERPILIH (TANPA RELOAD)
+   HAPUS TERPILIH
    =============================== */
 function hapusTerpilih(id) {
   const sheet = mapSheet(id);
@@ -156,13 +158,17 @@ function hapusTerpilih(id) {
 
   fetch(API_URL, {
     method: "POST",
+    headers: {
+      "Content-Type": "text/plain;charset=utf-8", // 🔥 penting
+    },
     body: JSON.stringify({
       action: "hapusBanyak",
       sheet,
       rows,
+      token: TOKEN, // 🔥 WAJIB
     }),
   }).then(() => {
-    loadData(); // 🔥 update tanpa reload
+    loadData();
   });
 }
 
