@@ -181,7 +181,8 @@ function ubahForm() {
   formJual.classList.add("hidden");
   formTetap.classList.add("hidden");
   formVariabel.classList.add("hidden");
-  formSwap.classList.add("hidden"); // 🔥 tambahan
+  formSwap.classList.add("hidden");
+  formPindah.classList.add("hidden");
 
   if (sheet.value === "Beli sapi") {
     formBeli.classList.remove("hidden");
@@ -196,10 +197,14 @@ function ubahForm() {
   if (sheet.value === "Biaya Tetap") formTetap.classList.remove("hidden");
   if (sheet.value === "Biaya variabel") formVariabel.classList.remove("hidden");
 
-  // 🔥 SWAP
   if (sheet.value === "Swap") {
     formSwap.classList.remove("hidden");
     loadSwap();
+  }
+
+  if (sheet.value === "Pindah") {
+    formPindah.classList.remove("hidden");
+    loadPindah();
   }
 }
 
@@ -241,10 +246,52 @@ function loadSwap() {
 
       s1.onchange = filterSwap;
       s2.onchange = filterSwap;
-    });
+    })
+    .catch(() => alert("Gagal load data"));
+}
+
+function loadPindah() {
+  fetch(
+    URL +
+      "?action=posisi&sheet=" +
+      encodeURIComponent("Beli sapi") +
+      "&token=" +
+      TOKEN,
+  )
+    .then((r) => r.json())
+    .then((terpakai) => {
+      const asal = document.getElementById("pindah1");
+      const tujuan = document.getElementById("pindah2");
+
+      if (!asal || !tujuan) return;
+
+      asal.innerHTML = `<option value="">-- Pilih Blok --</option>`;
+      tujuan.innerHTML = `<option value="">-- Pilih Blok --</option>`;
+
+      SEMUA_BLOK.forEach((blok) => {
+        // 👉 kalau ADA isinya → masuk ke asal
+        if (terpakai.includes(blok)) {
+          const opt = document.createElement("option");
+          opt.value = blok;
+          opt.textContent = blok;
+          asal.appendChild(opt);
+        }
+
+        // 👉 kalau KOSONG → masuk ke tujuan
+        if (!terpakai.includes(blok)) {
+          const opt = document.createElement("option");
+          opt.value = blok;
+          opt.textContent = blok;
+          tujuan.appendChild(opt);
+        }
+      });
+      asal.onchange = filterPindah;
+      tujuan.onchange = filterPindah;
+    })
+    .catch(() => alert("Gagal load data"));
 }
 /* ================================
-   PROSES SWAP
+   PROSES SWAP (FIX)
    ================================ */
 function prosesSwap() {
   const b1 = document.getElementById("swap1").value;
@@ -273,11 +320,70 @@ function prosesSwap() {
       token: TOKEN,
     }),
   })
-    .then(() => {
-      alert("Swap berhasil");
-      loadSwap();
+    .then((res) => res.json())
+    .then((res) => {
+      if (res.status === "ok") {
+        alert("Swap berhasil");
+
+        // ✅ tambahan (UX fix)
+        document.getElementById("swap1").value = "";
+        document.getElementById("swap2").value = "";
+
+        loadSwap();
+      } else {
+        alert("Swap gagal: " + res.msg);
+      }
     })
     .catch(() => alert("Swap gagal"));
+}
+
+/* ================================
+   PROSES PINDAH (FIX)
+   ================================ */
+function prosesPindah() {
+  const asal = document.getElementById("pindah1").value;
+  const tujuan = document.getElementById("pindah2").value;
+
+  if (!asal || !tujuan) {
+    alert("Pilih blok dulu");
+    return;
+  }
+
+  // ✅ tambahan penting
+  if (asal === tujuan) {
+    alert("Blok tidak boleh sama");
+    return;
+  }
+
+  fetch(URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "text/plain;charset=utf-8",
+    },
+    body: JSON.stringify({
+      action: "pindahBlok",
+      sheet: "Beli sapi",
+      asal: asal,
+      tujuan: tujuan,
+      token: TOKEN,
+    }),
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      if (res.status === "ok") {
+        alert("Pindah berhasil");
+
+        // ✅ pindahin reset ke sini (bukan di atas)
+        document.getElementById("pindah1").value = "";
+        document.getElementById("pindah2").value = "";
+
+        loadPindah();
+        loadSwap();
+      } else {
+        alert(res.msg);
+      }
+    })
+    .catch(() => alert("Pindah gagal"));
 }
 
 /* ================================
@@ -295,6 +401,22 @@ function filterSwap() {
   });
 
   [...swap2.options].forEach((opt) => {
+    opt.disabled = opt.value === v1;
+  });
+}
+
+function filterPindah() {
+  const asal = document.getElementById("pindah1");
+  const tujuan = document.getElementById("pindah2");
+
+  const v1 = asal.value;
+  const v2 = tujuan.value;
+
+  [...asal.options].forEach((opt) => {
+    opt.disabled = opt.value === v2;
+  });
+
+  [...tujuan.options].forEach((opt) => {
     opt.disabled = opt.value === v1;
   });
 }
@@ -325,7 +447,8 @@ function loadBlok(sheetName, selectId) {
           select.appendChild(opt);
         }
       });
-    });
+    })
+    .catch(() => alert("Gagal load blok"));
 }
 
 /* ================================
