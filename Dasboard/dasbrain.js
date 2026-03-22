@@ -106,7 +106,15 @@ function renderChart() {
     ["Pembelian sapi", "Pakan & DLL", "Gaji"],
   );
 
+  renderLegend(
+    "legendBreakdown",
+    ["Pembelian sapi", "Pakan & DLL", "Gaji"],
+    [pembelian, variabel, tetap],
+    ["#3b82f6", "#f59e0b", "#ef4444"],
+  );
+
   drawPie("chartTotal", [totalSemua], ["#10b981"], ["TOTAL"]);
+  document.getElementById("totalText").textContent = formatRupiah(totalSemua);
 }
 
 /* ===============================
@@ -125,46 +133,49 @@ function drawPie(canvasId, data, colors, labels) {
   let start = 0;
 
   data.forEach((val, i) => {
-    if (val === 0) return;
-
     const slice = (val / total) * 2 * Math.PI;
-    const mid = start + slice / 2;
 
-    // 🎨 gambar pie
+    // skip kalau benar-benar kosong
+    if (val === 0) {
+      start += slice;
+      return;
+    }
+
+    // ===============================
+    // 🎨 GAMBAR PIE (SELALU DIGAMBAR)
+    // ===============================
     ctx.beginPath();
     ctx.moveTo(110, 110);
     ctx.arc(110, 110, 100, start, start + slice);
     ctx.fillStyle = colors[i];
     ctx.fill();
 
-    // 🧠 kalau cuma 1 slice (TOTAL)
-    if (data.length === 1) {
-      ctx.fillStyle = "#000000";
-      ctx.textAlign = "center";
-
-      ctx.font = "bold 12px Arial";
-      ctx.fillText(labels[i], 110, 105);
-
-      ctx.font = "11px Arial";
-      ctx.fillText(formatRupiah(val), 110, 120);
-
-      return;
-    }
-
-    // 📍 posisi text
-    const textX = 110 + Math.cos(mid) * 60;
-    const textY = 110 + Math.sin(mid) * 60;
-
-    ctx.fillStyle = "#000000";
-    ctx.font = "bold 11px Arial";
-    ctx.textAlign = "center";
-
-    // 📝 label + nominal
-    ctx.fillText(labels[i], textX, textY - 6);
-    ctx.font = "10px Arial";
-    ctx.fillText(formatRupiah(val), textX, textY + 8);
-
     start += slice;
+  });
+}
+
+function renderLegend(containerId, labels, data, colors) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  labels.forEach((label, i) => {
+    if (!data[i]) return;
+
+    const item = document.createElement("div");
+    item.className = "legend-item";
+
+    const color = document.createElement("div");
+    color.className = "legend-color";
+    color.style.background = colors[i];
+
+    const text = document.createElement("span");
+    text.textContent = `${label} - ${formatRupiah(data[i])}`;
+
+    item.appendChild(color);
+    item.appendChild(text);
+    container.appendChild(item);
   });
 }
 

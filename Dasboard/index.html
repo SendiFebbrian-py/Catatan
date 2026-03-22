@@ -138,12 +138,18 @@
         <div class="chart-wrapper">
           <div class="circle-wrap">
             <canvas id="chartBreakdown" width="220" height="220"></canvas>
-            <div class="circle-text" id="detailText"></div>
+
+            <div id="legendBreakdown" class="legend"></div>
           </div>
 
           <div class="circle-wrap">
             <canvas id="chartTotal" width="220" height="220"></canvas>
-            <div class="circle-text" id="totalText"></div>
+
+            <div class="circle-center">
+              <div class="total-label">TOTAL</div>
+              <div class="total-value" id="totalText"></div>
+              <div class="legend dummy"></div>
+            </div>
           </div>
         </div>
       </section>

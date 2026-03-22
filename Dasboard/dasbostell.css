@@ -1,15 +1,16 @@
 /* ================================
-   RESET DASAR
-   ================================ */
+RESET DASAR
+================================ */
+
 * {
   box-sizing: border-box;
 }
 
 /* ================================
-   BODY
-   ================================ */
+BODY
+================================ */
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Inter", Arial, sans-serif;
   background: #f4f6fb;
   margin: 0;
   padding: 16px;
@@ -17,16 +18,16 @@ body {
 }
 
 /* ================================
-   CONTAINER
-   ================================ */
+CONTAINER
+================================ */
 .container {
   max-width: 1100px;
   margin: 0 auto;
 }
 
 /* ================================
-   JUDUL
-   ================================ */
+JUDUL
+================================ */
 h1 {
   text-align: center;
   margin-bottom: 20px;
@@ -34,8 +35,8 @@ h1 {
 }
 
 /* ================================
-   MENU
-   ================================ */
+MENU
+================================ */
 .menu {
   display: flex;
   justify-content: center;
@@ -57,6 +58,7 @@ h1 {
 
 .menu button:hover {
   background: #2563eb;
+  transform: translateY(-1px);
 }
 
 .menu button:active {
@@ -64,15 +66,23 @@ h1 {
 }
 
 /* ================================
-   CARD
-   ================================ */
+CARD
+================================ */
 .card {
   display: none;
   background: #ffffff;
   padding: 18px;
-  border-radius: 14px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
   margin-bottom: 20px;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08);
 }
 
 .card.active {
@@ -94,27 +104,27 @@ h1 {
 }
 
 /* ================================
-   SEARCH
-   ================================ */
+SEARCH
+================================ */
 .search {
   padding: 8px 10px;
   width: 200px;
   border-radius: 8px;
-  border: 1px solid #d1d5db;
+  border: 1px solid #e2e8f0;
   font-size: 13px;
 }
 
 /* ================================
-   TABLE WRAP (NEW)
-   ================================ */
+TABLE WRAP
+================================ */
 .table-wrap {
   overflow-x: auto;
   border-radius: 10px;
 }
 
 /* ================================
-   TABLE
-   ================================ */
+TABLE
+================================ */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -124,26 +134,28 @@ table {
 
 th,
 td {
-  border: 1px solid #cbd5e1;
+  border: 1px solid #e2e8f0;
   padding: 10px;
   font-size: 13px;
   white-space: nowrap;
 }
 
-tbody tr:hover {
-  background: #f3f4f6;
-}
-
 th {
-  background: #f1f5f9;
+  background: #f8fafc;
+  color: #334155;
   text-transform: uppercase;
   font-weight: 600;
   text-align: center;
 }
 
+tbody tr:hover {
+  background: #f1f5f9;
+  transition: background 0.2s ease;
+}
+
 /* ================================
-   CHECKBOX
-   ================================ */
+CHECKBOX
+================================ */
 th:first-child,
 td:first-child {
   text-align: center;
@@ -159,8 +171,8 @@ tr:has(.row-check:checked) {
 }
 
 /* ================================
-   TOMBOL HAPUS
-   ================================ */
+TOMBOL HAPUS
+================================ */
 .btn-danger {
   margin: 10px 0;
   background: #ef4444;
@@ -181,8 +193,8 @@ tr:has(.row-check:checked) {
 }
 
 /* ================================
-   MODE TERKUNCI
-   ================================ */
+MODE TERKUNCI
+================================ */
 .card.locked {
   background: #f9fafb;
 }
@@ -205,8 +217,8 @@ tr:has(.row-check:checked) {
 }
 
 /* ================================
-   🔥 STATISTIK (NEW)
-   ================================ */
+STATISTIK
+================================ */
 .stat-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -215,10 +227,11 @@ tr:has(.row-check:checked) {
 }
 
 .stat-box {
-  background: #f1f5f9;
+  background: #f8fafc;
   padding: 14px;
-  border-radius: 10px;
+  border-radius: 12px;
   text-align: center;
+  border: 1px solid #e2e8f0;
 }
 
 .stat-box p {
@@ -233,35 +246,92 @@ tr:has(.row-check:checked) {
 }
 
 /* ================================
-   CHART
-   ================================ */
+CHART
+================================ */
 .chart-wrapper {
   display: flex;
   justify-content: center;
-  gap: 30px;
+  align-items: flex-start;
+  gap: 40px;
   flex-wrap: wrap;
+  margin-top: 20px;
 }
 
 .circle-wrap {
   position: relative;
-  width: 220px;
+  width: 260px;
+  height: auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.circle-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  font-size: 12px;
-  font-weight: 600;
-  color: #1f2937;
-  line-height: 1.4;
+.circle-wrap canvas {
+  display: block;
 }
 
 /* ================================
-   RESPONSIVE HP
-   ================================ */
+TOTAL CENTER (🔥 BARU)
+================================ */
+.circle-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.total-label {
+  font-size: 17px;
+  font-weight: 700;
+  color: #111;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.total-value {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1f2937;
+  margin-top: 4px;
+  letter-spacing: 0.5px;
+  margin: 0;
+  line-height: 1.2;
+}
+
+/* ================================
+LEGEND
+================================ */
+.legend {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 10px;
+  font-size: 13px;
+  align-items: flex-start;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+}
+
+.legend.dummy {
+  visibility: hidden;
+}
+
+/* ================================
+RESPONSIVE
+================================ */
 @media (max-width: 480px) {
   .card {
     padding: 12px;
@@ -282,9 +352,5 @@ tr:has(.row-check:checked) {
 
   .circle-wrap {
     width: 180px;
-  }
-
-  .circle-text {
-    font-size: 11px;
   }
 }
